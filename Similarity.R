@@ -48,6 +48,6 @@ genes <- ds_ref@assays$RNA@meta.data$var.features[!is.na(ds_ref@assays$RNA@meta.
 genes <- genes[-(grep("^MT", genes))]
 
 # get maximum correlation as measure of similarity
-nhsim <- scrabbitr::calcNhoodSim(dsmilo, dsmilo_ref, sim_features = sim_genes, sim_preprocessing="gene_spec", sim_measure="pearson", verbose = TRUE)
+nhsim <- scrabbitr::calcNhoodSim(dsmilo, dsmilo_ref, sim_features = genes, sim_preprocessing="gene_spec", sim_measure="pearson", verbose = TRUE)
 max_nhsim <- scrabbitr::getMaxMappings(nhsim$nhood_sim, 1, long_format=FALSE)
 
