@@ -65,7 +65,7 @@ names(index) <- c("Suprabasal", "Basal resting", "Deuterosomal", "Multiciliated 
                   "SMG duct", "Ionocyte", "Goblet (nasal)", "Hillock-like")
 ds@meta.data$Celltypist.prediction <- index[ds@meta.data$Celltypist.prediction]
 
-# for ARI comparison make Multiciliated Ciliated, liek in teh Manual annotation
+# for ARI comparison make Multiciliated Ciliated, like in the Manual annotation
 ds@meta.data$Celltypist.prediction.ari <- ds@meta.data$Celltypist.prediction
 ds@meta.data$Celltypist.prediction.ari[ds@meta.data$Celltypist.prediction.ari == "Multiciliated"] <- "Ciliated"
 
