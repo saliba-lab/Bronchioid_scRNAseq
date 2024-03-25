@@ -1,5 +1,8 @@
 # Script for Correlation based similarity analysis
 
+# ds = Seurat object of bronchioid data
+# ds_ref = Seurat object of airway epithelial reference
+
 # Load packages
 suppressPackageStartupMessages(library(scrabbitr))
 suppressPackageStartupMessages(library(SingleCellExperiment))
