@@ -38,16 +38,17 @@ dssce_ref <- Seurat::as.SingleCellExperiment(ds_ref)
 SingleCellExperiment::reducedDim(dssce_ref, "RPCA") <- ds_ref@reductions$rpca@cell.embeddings
 SingleCellExperiment::reducedDim(dssce_ref, "UMAP") <- ds_ref@reductions$umap@cell.embeddings
 
-dsmilo_ref <- miloR::Milo(dssce_ref)
-dsmilo_ref <- miloR::buildGraph(dsmilo_ref, k = 30, d = 30, reduced.dim = reduced.dims)
-dsmilo_ref <- miloR::makeNhoods(dsmilo_ref, prop = 0.1, k = 30, d = 30, refined = T, reduced_dims = "RPCA")
-dsmilo_ref <- miloR::buildNhoodGraph(dsmilo_ref)
+# make milo from all CCF categories
+dsmilo_ref_CCF_category <- miloR::Milo(dssce_ref_CCF_category)
+dsmilo_ref_CCF_category <- miloR::buildGraph(dsmilo_ref_CCF_category, k = 30, d = 30, reduced.dim = reduced.dims)
+dsmilo_ref_CCF_category <- miloR::makeNhoods(dsmilo_ref_CCF_category, prop = 0.1, k = 30, d = 30, refined = T, reduced_dims = "RPCA")
+dsmilo_ref_CCF_category <- miloR::buildNhoodGraph(dsmilo_ref_CCF_category)
 
 # get genes for similarity
 genes <- ds_ref@assays$RNA@meta.data$var.features[!is.na(ds_ref@assays$RNA@meta.data$var.features)]
 genes <- genes[-(grep("^MT", genes))]
 
 # get maximum correlation as measure of similarity
-nhsim <- scrabbitr::calcNhoodSim(dsmilo, dsmilo_ref, sim_features = genes, sim_preprocessing="gene_spec", sim_measure="pearson", verbose = TRUE)
+nhsim <- scrabbitr::calcNhoodSim(dsmilo, dsmilo_ref_CCF_category, sim_features = genes, sim_preprocessing="gene_spec", sim_measure="pearson", verbose = TRUE)
 max_nhsim <- scrabbitr::getMaxMappings(nhsim$nhood_sim, 1, long_format=FALSE)
 
