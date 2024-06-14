@@ -41,7 +41,7 @@ ds@meta.data[Ionocytes, ]$Manual.Annotation <- "Ionocyte"
 Hillock_like <- Seurat::CellSelector(plot) # select Hillock-like cells forming a separate cluster on UMAP
 ds@meta.data[Hillock_like, ]$Manual.Annotation <- "Hillock-like"
 
-# CellTypist predicitions
+# CellTypist predictions
 # make input file for CellTypist
 table <- Seurat::GetAssayData(ds, layer = "counts", assay = "RNA")
 write.csv(table, "path/to/CellTypist/input/input.csv")
@@ -69,9 +69,9 @@ ds@meta.data$Celltypist.prediction <- index[ds@meta.data$Celltypist.prediction]
 ds@meta.data$Celltypist.prediction.ari <- ds@meta.data$Celltypist.prediction
 ds@meta.data$Celltypist.prediction.ari[ds@meta.data$Celltypist.prediction.ari == "Multiciliated"] <- "Ciliated"
 
-# Annotate Basal Differentiating as Basal for ARi 
+# Annotate Basal Differentiating as Basal for ARI 
 ds@meta.data$Manual.Annotation.ari <- ds@meta.data$Manual.Annotation
 ds@meta.data$Manual.Annotation.ari[ds@meta.data$Manual.Annotation.ari == "Basal Differentiating"] <- "Basal"
 
-# Compute Adjusted Rand Index between manual annotation and CellTypist prediciton
-ARI <- mclust::adjustedRandIndex(ds_upload@meta.data$Celltypist.prediction.ari, ds_upload@meta.data$Manual.Annotation.ari)
+# Compute Adjusted Rand Index between manual annotation and CellTypist prediction
+ARI <- mclust::adjustedRandIndex(ds@meta.data$Celltypist.prediction.ari, ds@meta.data$Manual.Annotation.ari)
